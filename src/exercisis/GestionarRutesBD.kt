@@ -70,10 +70,39 @@ class GestionarRutesBD() {
 
     }
     fun esborrar(i: Int){
-//DELETE FROM table_name WHERE condition;
         val qr1= "DELETE FROM RUTES WHERE num_r=$i"
         val qr2= "DELETE FROM PUNTS WHERE num_r=$i"
         st.executeUpdate(qr1)
         st.executeUpdate(qr2)
+    }
+    fun guardar(r: Ruta){
+        val querryString="SELECT count(*) FROM RUTES"
+        var rutilla:Ruta
+        var existe=false
+        val rs = st.executeQuery(querryString)
+        var x=0
+        for (i in 1 .. rs.getInt(1)){
+           rutilla=buscar(i)
+            if (rutilla.nom.equals(r.nom)) {
+                existe = true
+                x=i
+                break
+            }
+        }
+        if (!existe){
+            inserir(r)
+        }
+        if (existe){
+
+            val querry1="UPDATE RUTES SET desn = ${r.desnivell}, desn_ac = ${r.desnivellAcumulat} WHERE num_r = ${x};"
+            st.executeUpdate(querry1)
+            for (i in 1 until r.size()) {
+                val querry2="UPDATE PUNTS " +
+                        "SET nom_p = \'${r.getPuntNom(i)}\', latitud = ${r.getPuntLatitud(i)}, longitud = ${r.getPuntLongitud(i)} "+
+                        "WHERE num_r = ${x} AND num_p = $i+1;"
+                st.executeUpdate(querry2)
+            }
+
+        }
     }
 }
