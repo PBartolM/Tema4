@@ -91,7 +91,7 @@ class FinestraComplet : JFrame() {
             //La Magdalena
             val getnom = "select num_r FROM RUTES where nom_r=\'${qNom.text.toString()} \'"
             val anteriorq = st.executeQuery(getnom)
-            val anteriorInt=anteriorq.getInt(1)-1
+            val anteriorInt=(anteriorq.getInt(1).toInt())-1
             val gRutes = GestionarRutesBD()
             val primeraRuta:Ruta= gRutes.buscar(anteriorInt)
             qNom.text=primeraRuta.nom
@@ -103,7 +103,7 @@ class FinestraComplet : JFrame() {
             // instruccions per a situar-se en la ruta següent, i visualitzar-la
             val getnom = "select num_r FROM RUTES where nom_r=\'${qNom.text.toString()} \'"
             val seguentq = st.executeQuery(getnom)
-            val seguentInt=seguentq.getInt(1)+1
+            val seguentInt=(seguentq.getInt(1).toInt())+1
             val gRutes = GestionarRutesBD()
             val primeraRuta:Ruta= gRutes.buscar(seguentInt)
             qNom.text=primeraRuta.nom
