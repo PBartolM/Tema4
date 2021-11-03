@@ -93,15 +93,29 @@ class GestionarRutesBD() {
             inserir(r)
         }
         if (existe){
-
             val querry1="UPDATE RUTES SET desn = ${r.desnivell}, desn_ac = ${r.desnivellAcumulat} WHERE num_r = ${x};"
             st.executeUpdate(querry1)
-            for (i in 1 until r.size()) {
+
+
+        }
+        val querryPuntos="select count(*)\n" +
+                "FROM PUNTS\n" +
+                "where num_r=$x"
+        val numPunts = st.executeQuery(querryPuntos)
+        val resto=r.llistaDePunts.size-numPunts.getInt(1)
+        if (r.llistaDePunts.size>numPunts.getInt(1)){
+            for (i in 0 until r.size()) {
                 val querry2="UPDATE PUNTS " +
                         "SET nom_p = \'${r.getPuntNom(i)}\', latitud = ${r.getPuntLatitud(i)}, longitud = ${r.getPuntLongitud(i)} "+
-                        "WHERE num_r = ${x} AND num_p = $i+1;"
+                        "WHERE num_r = ${x} AND num_p = ${i+1};"
                 st.executeUpdate(querry2)
+
             }
+            val resto = st.executeQuery(querryPuntos)
+            for(i in resto.getInt(1) until r.llistaDePunts.size){
+                val palabras = ("INSERT INTO PUNTS VALUES ($x,${i + 1},'${r.getPuntNom(i)}',${r.getPuntLatitud(i)},${r.getPuntLongitud(i)})")
+                st.executeUpdate(palabras)
+                }
 
         }
     }

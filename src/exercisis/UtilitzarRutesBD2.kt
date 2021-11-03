@@ -6,9 +6,9 @@ package exercisis
         val gRutes = GestionarRutesBD()
 
         var r = gRutes.buscar(1) as Ruta
-        r.mostrarRuta()
-        r.desnivellAcumulat=606
-        gRutes.guardar(r)
+//        r.mostrarRuta()
+//        r.desnivellAcumulat=606
+//        gRutes.guardar(r)
 
         r = gRutes.buscar(2) as Ruta
         r.mostrarRuta()
@@ -16,8 +16,8 @@ package exercisis
         gRutes.guardar(r)
 
         println("Després de modificar")
-        r = gRutes.buscar(1) as Ruta
-        r.mostrarRuta()
+//        r = gRutes.buscar(1) as Ruta
+//        r.mostrarRuta()
         r = gRutes.buscar(2) as Ruta
         r.mostrarRuta()
 
