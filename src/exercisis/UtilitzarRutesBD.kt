@@ -17,13 +17,13 @@ fun main(args: Array<String>) {
 //    gRutes.inserir(Ruta("Pelegrins de Les Useres",896,1738,punts))
 
 //     Llistat de totes les rutes
-    for (r in gRutes.llistat())
-        r?.mostrarRuta()
+//    for (r in gRutes.llistat())
+//        r?.mostrarRuta()
 
 //     Buscar una ruta determinada
-//    val r2 = gRutes.buscar(2)
-//    if (r2 != null)
-//        r2.mostrarRuta()
+    val r2 = gRutes.buscar(1)
+    if (r2 != null)
+        r2.mostrarRuta()
 
 //    Borrar ruta indicada
 //        gRutes.esborrar(3)

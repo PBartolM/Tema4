@@ -36,15 +36,14 @@ class GestionarRutesBD() {
             var des=0
             var desa=0
             var rutilla=Ruta("",0,0,puntsVoid)
-            val querryString="SELECT * FROM RUTES"
+            val querryString="SELECT * FROM RUTES WHERE num_r=$i"
             var rs = st.executeQuery(querryString)
-            while (rs.next()) {
-                if (rs.getInt(1)==i) {
-                    num_r = rs.getInt(1)
-                    nom = rs.getString(2).toString()
-                    des = rs.getInt(3)
-                    desa = rs.getInt(4)
-                }
+            if (rs.next()) {
+                num_r = rs.getInt(1)
+                nom = rs.getString(2).toString()
+                des = rs.getInt(3)
+                desa = rs.getInt(4)
+
             }
             rs.close()
             rs = st.executeQuery("select * from Punts where num_r is ${num_r}")
@@ -63,17 +62,21 @@ class GestionarRutesBD() {
         var lista= arrayListOf<Ruta>()
         val querryString="SELECT count(*) FROM RUTES"
         val rs = st.executeQuery(querryString)
-        for (i in 1 .. rs.getInt(1)){
-           lista.add(buscar(i))
+        if (rs.getInt(1)>=1){
+            for (i in 1 .. rs.getInt(1)){
+                lista.add(buscar(i))
+            }
         }
+
         return lista
 
     }
     fun esborrar(i: Int){
         val qr1= "DELETE FROM RUTES WHERE num_r=$i"
         val qr2= "DELETE FROM PUNTS WHERE num_r=$i"
-        st.executeUpdate(qr1)
+
         st.executeUpdate(qr2)
+        st.executeUpdate(qr1)
     }
     fun guardar(r: Ruta){
         val querryString="SELECT count(*) FROM RUTES"
